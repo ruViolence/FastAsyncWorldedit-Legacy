@@ -2,6 +2,7 @@ package com.boydti.fawe.util;
 
 import sun.misc.Unsafe;
 
+import java.lang.invoke.MethodHandles;
 import java.lang.reflect.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -107,13 +108,17 @@ public class ReflectionUtils9 {
         // not be final anymore, thus tricking reflection into
         // letting us modify the static final field
         if (Modifier.isFinal(field.getModifiers())) {
-            Field modifiersField = Field.class.getDeclaredField("modifiers");
-            modifiersField.setAccessible(true);
-            int modifiers = modifiersField.getInt(field);
+            try {
+                Field lookupField = MethodHandles.Lookup.class.getDeclaredField("IMPL_LOOKUP");
+                lookupField.setAccessible(true);
 
-            // blank out the final bit in the modifiers int
-            modifiers &= ~Modifier.FINAL;
-            modifiersField.setInt(field, modifiers);
+                // blank out the final bit in the modifiers int
+                ((MethodHandles.Lookup) lookupField.get(null))
+                        .findSetter(Field.class, "modifiers", int.class)
+                        .invokeExact(field, field.getModifiers() & ~Modifier.FINAL);
+            } catch (Throwable e) {
+                e.printStackTrace();
+            }
         }
 
         try {
