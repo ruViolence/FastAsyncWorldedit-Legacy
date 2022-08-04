@@ -94,7 +94,6 @@ subprojects {
     }
 
     repositories {
-        maven {url "https://mvnrepository.com/artifact/"}
         mavenCentral()
         maven {url "https://repo.dmulloy2.net/content/groups/public/"}
         maven {url "https://repo.destroystokyo.com/repository/maven-public//"}
@@ -112,7 +111,9 @@ subprojects {
         maven {url "https://repo.dmulloy2.net/nexus/repository/public/"}
         maven {url "https://maven.elmakers.com/repository/"}
         maven {url "https://ci.ender.zone/plugin/repository/everything/"}
-        maven {url "https://plotsquared.com/mvn/"}
+        maven {url "https://repo.papermc.io/repository/maven-public/"}
+        maven {url "https://jitpack.io"}
+        maven {url "https://repo.codemc.org/repository/maven-public/"}
     }
 }
 task aggregatedJavadocs(type: Javadoc, description: 'Generate javadocs from all child projects as if it was a single project', group: 'Documentation') {
