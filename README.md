@@ -5,3 +5,4 @@ You have to add this to your JVM arguments to make sure FAWE can modify non fina
 ```
 --add-opens java.base/java.lang.invoke=ALL-UNNAMED
 ```
+a
